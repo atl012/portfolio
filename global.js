@@ -4,7 +4,7 @@ function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
 
-// Navigation
+// ---------- Navigation ----------
 let pages = [
   { url: '', title: 'Home' },
   { url: 'projects/', title: 'Projects' },
@@ -42,7 +42,7 @@ for (let p of pages) {
   nav.append(a);
 }
 
-// Dark mode
+// ---------- Dark mode ----------
 document.body.insertAdjacentHTML(
   'afterbegin',
   `
@@ -74,7 +74,7 @@ select.addEventListener('input', function (event) {
   localStorage.colorScheme = event.target.value;
 });
 
-// Better contact form
+// ---------- Better contact form ----------
 const form = document.querySelector('form');
 
 form?.addEventListener('submit', function (event) {
@@ -89,3 +89,71 @@ form?.addEventListener('submit', function (event) {
 
   location.href = `${form.action}?${params.join('&')}`;
 });
+
+// ---------- Lab 4: reusable functions ----------
+
+// Step 1.2: fetch and parse a JSON file
+export async function fetchJSON(url) {
+  try {
+    // Fetch the JSON file from the given URL
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching or parsing JSON data:', error);
+    return null;
+  }
+}
+
+// Step 1.4: render a list of projects into a container
+export function renderProjects(projects, containerElement, headingLevel = 'h2') {
+  // Make sure the container is a real DOM element
+  if (!(containerElement instanceof HTMLElement)) {
+    console.error('renderProjects: containerElement is not a valid element.');
+    return;
+  }
+
+  // Validate the heading level (fall back to h2)
+  headingLevel = String(headingLevel).toLowerCase();
+  if (!['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(headingLevel)) {
+    console.warn(`renderProjects: invalid heading "${headingLevel}", using h2.`);
+    headingLevel = 'h2';
+  }
+
+  // Clear existing content to avoid duplicates
+  containerElement.innerHTML = '';
+
+  // Placeholder for empty or missing data
+  if (!Array.isArray(projects) || projects.length === 0) {
+    containerElement.innerHTML = '<p>No projects to show yet.</p>';
+    return;
+  }
+
+  for (const project of projects) {
+    const article = document.createElement('article');
+
+    // Handle missing properties gracefully
+    const title = project.title ?? 'Untitled project';
+    const image =
+      project.image || 'https://vis-society.github.io/labs/2/images/empty.svg';
+    const description = project.description ?? '';
+
+    article.innerHTML = `
+      <${headingLevel}>${title}</${headingLevel}>
+      <img src="${image}" alt="${title}">
+      <p>${description}</p>
+    `;
+
+    containerElement.appendChild(article);
+  }
+}
+
+// Step 3.2: fetch a GitHub user's public data
+export async function fetchGitHubData(username) {
+  return fetchJSON(`https://api.github.com/users/${username}`);
+}
