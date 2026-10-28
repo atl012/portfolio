@@ -1,5 +1,6 @@
 :root {
   --color-accent: oklch(87.161% 0.07844 230.489);
+  --border-color: oklch(50% 10% 200 / 40%);
 }
 
 html {
@@ -25,7 +26,6 @@ img {
 
 /* Navigation */
 nav {
-  --border-color: oklch(50% 10% 200 / 40%);
   display: flex;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--border-color);
@@ -95,6 +95,99 @@ form {
       margin: 0;
     }
   }
+}
+
+/* Project year */
+.project-year {
+  font-family: Baskerville, serif;
+  font-variant-numeric: oldstyle-nums;
+  opacity: 0.7;
+  margin-block: 0.5em 0;
+}
+
+/* Pie chart and legend side by side */
+.container {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+#projects-pie-plot {
+  flex: 0 0 40%;
+  max-width: 20em;
+  margin-block: 2em;
+  overflow: visible;
+
+  /* Fade the other wedges when one is hovered */
+  &:has(path:hover) {
+    path:not(:hover) {
+      opacity: 0.5;
+    }
+  }
+}
+
+path {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+path:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.legend {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  margin: 0;
+  padding: 1em;
+  list-style: none;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5em;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
+  }
+
+  .legend-item:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .swatch {
+    display: inline-block;
+    width: 1em;
+    aspect-ratio: 1 / 1;
+    background-color: var(--color);
+    border-radius: 50%;
+  }
+}
+
+/* The selected wedge and legend item */
+.selected {
+  --color: oklch(60% 45% 0) !important;
+
+  &:is(path) {
+    fill: var(--color);
+  }
+
+  &:is(li) {
+    font-weight: bold;
+  }
+}
+
+/* Search bar (Lab 5, Step 4) */
+.searchBar {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5em 0.75em;
+  margin-block: 1em;
 }
 
 /* GitHub stats */
