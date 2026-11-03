@@ -211,7 +211,7 @@ path:focus-visible {
   font-size: 2em;
 }
 
-/* ---------- Lab 6: stats ---------- */
+/* ---------- Stats ---------- */
 .stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9em, 1fr));
@@ -230,7 +230,7 @@ path:focus-visible {
   }
 }
 
-/* ---------- Lab 6: scatterplot ---------- */
+/* ---------- Scatterplot ---------- */
 #chart svg {
   max-width: 100%;
 }
@@ -260,7 +260,7 @@ circle.selected {
   fill: #ff6b6b;
 }
 
-/* ---------- Lab 6: tooltip ---------- */
+/* ---------- Tooltip ---------- */
 dl.info {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -296,7 +296,7 @@ dl.info[hidden]:not(:hover, :focus-within) {
   left: 1em;
 }
 
-/* ---------- Lab 6: brush ---------- */
+/* ---------- Brush ---------- */
 @keyframes marching-ants {
   to {
     stroke-dashoffset: -8; /* 5 + 3 */

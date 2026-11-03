@@ -1,6 +1,6 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
-// ---------- Step 1.1: read the CSV ----------
+// ---------- Read the CSV ----------
 async function loadData() {
   const data = await d3.csv('loc.csv', (row) => ({
     ...row,
@@ -13,7 +13,7 @@ async function loadData() {
   return data;
 }
 
-// ---------- Step 1.2: one object per commit ----------
+// ---------- One object per commit ----------
 function processCommits(data) {
   return d3
     .groups(data, (d) => d.commit)
@@ -56,7 +56,7 @@ let yScale;
 let data = await loadData();
 let commits = processCommits(data);
 
-// ---------- Step 1.3: summary stats ----------
+// ---------- Summary stats ----------
 function renderCommitInfo(data, commits) {
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
 
@@ -104,7 +104,7 @@ function renderCommitInfo(data, commits) {
   addStat('Busiest day', d3.greatest(workByDay, (d) => d[1])?.[0]);
 }
 
-// ---------- Step 3: tooltip ----------
+// ---------- Tooltip ----------
 function renderTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
@@ -133,7 +133,7 @@ function updateTooltipPosition(event) {
   tooltip.style.top = `${event.clientY}px`;
 }
 
-// ---------- Step 5: brushing ----------
+// ---------- Brushing ----------
 function isCommitSelected(selection, commit) {
   if (!selection) {
     return false;
@@ -204,7 +204,7 @@ function createBrushSelector(svg) {
   svg.selectAll('.dots, .overlay ~ *').raise();
 }
 
-// ---------- Step 2: scatterplot ----------
+// ---------- Scatterplot ----------
 function renderScatterPlot(data, commits) {
   const width = 1000;
   const height = 600;
@@ -223,7 +223,7 @@ function renderScatterPlot(data, commits) {
     .nice();
   yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
 
-  // Step 2.2: margins and usable area
+  // Margins and usable area
   const margin = { top: 10, right: 10, bottom: 30, left: 40 };
   const usableArea = {
     top: margin.top,
@@ -237,7 +237,7 @@ function renderScatterPlot(data, commits) {
   xScale.range([usableArea.left, usableArea.right]);
   yScale.range([usableArea.bottom, usableArea.top]);
 
-  // Step 2.3: gridlines (added BEFORE the axes and dots)
+  // Gridlines (added BEFORE the axes and dots)
   const gridlines = svg
     .append('g')
     .attr('class', 'gridlines')
@@ -262,17 +262,17 @@ function renderScatterPlot(data, commits) {
     .attr('transform', `translate(${usableArea.left}, 0)`)
     .call(yAxis);
 
-  // Step 4.1 and 4.2: dot radius from lines edited (sqrt keeps AREA proportional)
+  // Dot radius from lines edited (sqrt keeps AREA proportional)
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
   const rScale = d3
     .scaleSqrt()
     .domain([minLines, maxLines])
     .range([2, 30]);
 
-  // Step 4.3: draw big dots first so small dots stay hoverable on top
+  // Draw big dots first so small dots stay hoverable on top
   const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
 
-  // Step 2.1: the dots
+  // The dots
   const dots = svg.append('g').attr('class', 'dots');
 
   dots
@@ -295,7 +295,7 @@ function renderScatterPlot(data, commits) {
       updateTooltipVisibility(false);
     });
 
-  // Step 5.1: brush
+  // Brush
   createBrushSelector(svg);
 }
 
