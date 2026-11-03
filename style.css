@@ -210,3 +210,103 @@ path:focus-visible {
   margin: 0;
   font-size: 2em;
 }
+
+/* ---------- Lab 6: stats ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9em, 1fr));
+  gap: 1em;
+  margin: 0 0 1em;
+
+  dt {
+    font-size: 80%;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.75em;
+  }
+}
+
+/* ---------- Lab 6: scatterplot ---------- */
+#chart svg {
+  max-width: 100%;
+}
+
+.gridlines {
+  .domain {
+    stroke: none;
+  }
+
+  line {
+    stroke: currentColor;
+    stroke-opacity: 0.12;
+  }
+}
+
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
+
+circle.selected {
+  fill: #ff6b6b;
+}
+
+/* ---------- Lab 6: tooltip ---------- */
+dl.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25em 1em;
+  margin: 0;
+  padding: 0.75em 1em;
+  background-color: color-mix(in oklch, canvas 85%, transparent);
+  border-radius: 0.5em;
+  box-shadow: 0 4px 14px oklch(0% 0 0 / 20%);
+  backdrop-filter: blur(6px);
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
+
+  dt {
+    font-size: 80%;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+dl.info[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+}
+
+/* ---------- Lab 6: brush ---------- */
+@keyframes marching-ants {
+  to {
+    stroke-dashoffset: -8; /* 5 + 3 */
+  }
+}
+
+.selection {
+  fill-opacity: 0.1;
+  stroke: currentColor;
+  stroke-opacity: 0.7;
+  stroke-dasharray: 5 3;
+  animation: marching-ants 2s linear infinite;
+}
