@@ -135,19 +135,31 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
     return;
   }
 
+  const placeholder = 'https://vis-society.github.io/labs/2/images/empty.svg';
+
   for (const project of projects) {
     const article = document.createElement('article');
 
     // Handle missing properties gracefully
     const title = project.title ?? 'Untitled project';
-    const image =
-      project.image || 'https://vis-society.github.io/labs/2/images/empty.svg';
     const description = project.description ?? '';
     const year = project.year ? `<p class="project-year">c. ${project.year}</p>` : '';
 
+    // Local images like "images/x.png" need the base path; full URLs are used as-is
+    const image = !project.image
+      ? placeholder
+      : /^https?:\/\//.test(project.image)
+        ? project.image
+        : BASE_PATH + project.image;
+
+    // Step 7: link the title if the project has a url
+    const heading = project.url
+      ? `<a href="${project.url}" target="_blank" rel="noopener">${title}</a>`
+      : title;
+
     // Description and year share one <div> so they fill one grid cell
     article.innerHTML = `
-      <${headingLevel}>${title}</${headingLevel}>
+      <${headingLevel}>${heading}</${headingLevel}>
       <img src="${image}" alt="${title}">
       <div>
         <p>${description}</p>

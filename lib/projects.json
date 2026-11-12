@@ -1,9 +1,10 @@
 [
-  {
-    "title": "Lorem ipsum dolor sit.",
+    {
+    "title": "Bikewatching",
     "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam dolor quos, quod assumenda explicabo odio."
+    "image": "images/bikewatching.png",
+    "url": "https://atl012.github.io/bikewatching/",
+    "description": "An interactive Mapbox map of Boston-area Bluebikes traffic. Bike lanes, station circles sized by trip volume, color showing arrivals versus departures, and a time-of-day slider."
   },
   {
     "title": "Laborum quia aliquid minima.",
