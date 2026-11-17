@@ -322,3 +322,106 @@ dl.info[hidden]:not(:hover, :focus-within) {
 .projects article :is(h1, h2, h3, h4, h5, h6) a:hover {
   text-decoration-color: currentColor;
 }
+
+/* ---------- Lab 8: commit slider ---------- */
+.slider-row {
+  margin-block: 1em;
+
+  label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25em 1em;
+  }
+
+  input {
+    flex: 1;
+    min-width: 8em;
+  }
+
+  time {
+    flex-basis: 100%;
+    margin-left: auto;
+    text-align: right;
+  }
+}
+
+/* ---------- Lab 8: new dots grow in (Step 1.4) ---------- */
+circle {
+  @starting-style {
+    r: 0;
+  }
+}
+
+/* ---------- Lab 8: unit visualization (Steps 2.1 to 2.4) ---------- */
+#files {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin: 0;
+
+  > div {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+
+  dt {
+    grid-column: 1;
+
+    small {
+      display: block;
+      font-size: 0.8em;
+      opacity: 0.7;
+    }
+  }
+
+  dd {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    align-content: start;
+    gap: 0.15em;
+    padding-top: 0.6em;
+    margin-left: 0;
+  }
+}
+
+.loc {
+  display: flex;
+  width: 0.5em;
+  aspect-ratio: 1;
+  background: var(--color);
+  border-radius: 50%;
+}
+
+/* ---------- Lab 8: scrollytelling (Step 3.1) ---------- */
+#scrolly-1 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+
+  > * {
+    flex: 1;
+  }
+}
+
+#scatter-story {
+  position: relative;
+}
+
+#scatter-story .step {
+  padding-bottom: 40vh; /* gives each commit room to scroll */
+}
+
+#scatter-plot {
+  position: sticky;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  height: 50vh;
+
+  h3 {
+    margin-top: 0;
+  }
+}
